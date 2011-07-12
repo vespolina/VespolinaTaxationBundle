@@ -7,26 +7,40 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Vespolina\PartnerBundle\Model;
+namespace Vespolina\TaxationBundle\Model;
 
-use Vespolina\PartnerBundle\Model\PartnerInterface;
+use Vespolina\TaxationBundle\Model\TaxRateInterface;
+use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 
-class Partner implements PartnerInterface
+class TaxZone implements TaxZoneInterface
 {
-    protected $partnerConfigurationName;
+    protected $code;
+    protected $name;
+    protected $rates;
 
-    public function __construct($partnerConfigurationName)
+    public function __construct()
     {
 
-        $this->partnerConfigurationName = $partnerConfigurationName;
+        $this->rates = array();
+
     }
 
     /**
      * @inheritdoc
      */
-    public function getId()
+    public function addRate(TaxRateInterface $rate)
     {
-        return $this->id;
+
+        $this->rate[$rate->getCode()] = $rate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCode()
+    {
+
+        return $this->code;
     }
 
     /**
@@ -34,24 +48,24 @@ class Partner implements PartnerInterface
      */
     public function getName()
     {
+
         return $this->name;
     }
 
     /**
      * @inheritdoc
      */
-    public function getPartnerConfigurationName()
+    public function getRates()
     {
 
-        return $this->partnerConfigurationName;
+        return $this->rates;
     }
-
     /**
      * @inheritdoc
      */
-    public function setId($id)
+    public function setCode($code)
     {
-        $this->id = $id;
+        $this->code = $code;
     }
 
     /**

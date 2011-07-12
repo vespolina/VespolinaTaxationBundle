@@ -7,40 +7,56 @@
  * with this source code in the file LICENSE.
  */
  
-namespace Vespolina\PartnerBundle\Model;
+namespace Vespolina\TaxationBundle\Model;
 
-interface PartnerInterface
+use Vespolina\TaxationBundle\Model\TaxRateInterface;
+
+interface TaxZoneInterface
 {
-    /**
-     * Get unique identifier
-     */
-    public function getId();
 
     /**
-     * Name of the partner
-     */
-    public function getName();
-
-    /**
-     * Get the name of the partner configuration to which this partner belongs
-     */
-    public function getPartnerConfigurationName();
-
-    /**
-     * Set the partner id
+     * Add the given rate to this zone
      *
      * @abstract
-     * @param  $id
+     * @param TaxRateInterface $rate
      * @return void
      */
-    public function setId($id);
+    function addRate(TaxRateInterface $rate);
+
 
     /**
-     * Set partner name
+     * Get tax zone code (should be unique)
+     */
+    function getCode();
+
+    /**
+     * Name of the tax zone
+     */
+    function getName();
+
+    /**
+     * Retrieve a list of available rates
+     *
+     * @abstract
+     * @return void
+     */
+    function getRates();
+
+    /**
+     * Set the tax zone code
+     *
+     * @abstract
+     * @param  $code
+     * @return void
+     */
+    function setCode($cpde);
+
+    /**
+     * Set the tax zone name
      *
      * @abstract
      * @param  $name
      * @return void
      */
-    public function setName($name);
+    function setName($name);
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <pricing_configuration id="tax_product_default">
+        <pricing_set>
+            <!-- No dimensions needed for this test -->
+            <element name="packaging_cost">
+                <class>Vespolina\PricingBundle\Model\PricingElement\MonetaryPricingElement</class>
+                <execution_event>context_independent</execution_event>
+            </element>
+            <element name="net_value">
+                <class>Vespolina\PricingBundle\Model\PricingElement\MonetaryPricingElement</class>
+                <execution_event>context_independent</execution_event>
+            </element>
+            <element name="vat_rate">
+                <class>Vespolina\PricingBundle\Model\PricingElement\MonetaryPricingElement</class>
+                <execution_event>context_dependent</execution_event>
+            </element>
+            <element name="total_excl_vat">
+                <class>Vespolina\PricingBundle\Model\PricingElement\MonetaryPricingElement</class>
+                <execution_event>context_dependent</execution_event>
+            </element>
+            <element name="total_incl_vat">
+                <class>Vespolina\PricingBundle\Model\PricingElement\MonetaryPricingElement</class>
+                <execution_event>context_dependent</execution_event>
+            </element>
+        </pricing_set>
+        <pricing_execution>
+            <step name="set_packaging_cost_factor">
+                <class>Vespolina\PricingBundle\Model\PricingExecutionStep\SetContainerValue</class>
+                <source>5</source>
+                <target>packaging_cost_factor</target>
+                <execution_event>context_independent</execution_event>
+            </step>
+            <step name="calculate_packaging_cost">
+                <class>Vespolina\PricingBundle\Model\PricingExecutionStep\ContainerCompute</class>
+                <source>net_value / 100 * packaging_cost_factor</source>
+                <target>packaging_cost</target>
+                <execution_event>context_independent</execution_event>
+            </step>
+            <step name="determine_vat_rate">
+                <class>Vespolina\TaxationBundle\Model\PricingExecutionStep\DetermineVATRate</class>
+                <target>vat_rate</target>
+                <strategy>region_based</strategy>
+                <execution_event>context_dependent</execution_event>
+            </step>
+            <step name="calculate_total_excl_vat">
+                <class>Vespolina\PricingBundle\Model\PricingExecutionStep\ContainerCompute</class>
+                <source>packaging_cost + net_value</source>
+                <target>total_excl_vat</target>
+                <execution_event>context_independent</execution_event>
+            </step>
+            <step name="calculate_total_vat">
+                <class>Vespolina\PricingBundle\Model\PricingExecutionStep\ContainerCompute</class>
+                <source>vat_rate * total_excl_vat / 100</source>
+                <target>total_vat</target>
+                <execution_event>context_dependent</execution_event>
+            </step>
+            <step name="calculate_total_incl_vat">
+                <class>Vespolina\PricingBundle\Model\PricingExecutionStep\ContainerCompute</class>
+                <source>total_excl_vat + total_vat</source>
+                <target>total_incl_vat</target>
+                <execution_event>context_dependent</execution_event>
+            </step>
+         </pricing_execution>
+    </pricing_configuration>
+
+
+</routes>

@@ -7,12 +7,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Vespolina\PricingBundle\Model\PricingExecutionStep;
+namespace Vespolina\TaxationBundle\Model\PricingExecutionStep;
 
 use Vespolina\PricingBundle\Model\PricingExecutionStep;
 use Vespolina\PricingBundle\Model\PricingContextContainerInterface;
 
-class DetermineVatRate extends PricingExecutionStep
+class DetermineVATRate extends PricingExecutionStep
 {
     public function execute()
     {
@@ -20,9 +20,15 @@ class DetermineVatRate extends PricingExecutionStep
         $vatRate = 0;
 
         switch ($strategy) {
-            case 'region_based_determination':
+            case 'region_based':
 
-                $country = 'BE'; //Belgium rulez!
+                $country =  $this->pricingContextContainer->get('country');
+
+                if (!$country)
+                {
+                    throw new \InvalidArgumentException(sprintf('Pricing execution step "%s" needs pricing context container value "country"', $this->name));
+                }
+
                 $source = $this->pricingContextContainer->get($this->getOption('source'));
 
                 //$country = $source->getAddress()->getCountry();

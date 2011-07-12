@@ -9,33 +9,47 @@
  
 namespace Vespolina\TaxationBundle\Model;
 
-interface TaxZoneInterface
+interface TaxRateInterface
 {
     /**
-     * Get unique identifier
+     * Get unique code
      */
-    public function getId();
+    public function getCode();
 
     /**
-     * Name of the tax zone
+     * Name of the tax rate
      */
     public function getName();
 
     /**
-     * Set the tax zone id
-     *
-     * @abstract
-     * @param  $id
-     * @return void
+     * Value of the tax rate
      */
-    public function setId($id);
+    public function getRate();
 
     /**
-     * Set the tax zone name
+     * Set the tax zone code
+     *
+     * @abstract
+     * @param  $code
+     * @return void
+     */
+    public function setCode($code);
+
+    /**
+     * Set the tax rate name
      *
      * @abstract
      * @param  $name
      * @return void
      */
     public function setName($name);
+
+    /**
+     * Set the tax rate value
+     *
+     * @abstract
+     * @param  $rate
+     * @return void
+     */
+    public function setRate($rate);
 }

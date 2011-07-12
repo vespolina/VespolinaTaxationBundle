@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Vespolina\PricingBundle\DependencyInjection;
+namespace Vespolina\TaxationBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 
-class VespolinaPricingExtension extends Extension
+class VespolinaTaxationExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -28,6 +28,6 @@ class VespolinaPricingExtension extends Extension
 
     public function getNamespace()
     {
-        return 'http://www.vespolina-org/schema/dic/vespolina-pricing-v1';
+        return 'http://www.vespolina-org/schema/dic/vespolina-taxation-v1';
     }
 }

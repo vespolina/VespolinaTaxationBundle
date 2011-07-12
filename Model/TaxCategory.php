@@ -2,20 +2,25 @@
 /**
  * (c) Vespolina Project http://www.vespolina-project.org
  *
- * (c) Daniel Kucharski <daniel@xerias.be>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
 namespace Vespolina\TaxationBundle\Model;
 
-use Vespolina\TaxationBundle\Model\TaxRateInterface;
+use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
 
-class TaxRate implements TaxRateInterface
+/**
+ * TaxCategory holds the basic tax classification for various entities such as
+ *  - defining the customer tax category.  eg. "wholesale customer"
+ *  - defining the product tax category eg. "prepared food"
+ *
+ * @author Daniel Kucharski <daniel@xerias.be>
+ */
+class TaxCategory implements TaxCategoryInterface
 {
-    protected $code;
+    protected $id;
     protected $name;
-    protected $rate;
 
     public function __construct()
     {
@@ -25,10 +30,10 @@ class TaxRate implements TaxRateInterface
     /**
      * @inheritdoc
      */
-    public function getCode()
+    public function getId()
     {
 
-        return $this->code;
+        return $this->id;
     }
 
     /**
@@ -43,18 +48,9 @@ class TaxRate implements TaxRateInterface
     /**
      * @inheritdoc
      */
-    public function getRate()
+    public function setId($id)
     {
-
-        return $this->rate;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
+        $this->id = $id;
     }
 
     /**
@@ -63,13 +59,5 @@ class TaxRate implements TaxRateInterface
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setRate($rate)
-    {
-        $this->rate = $rate;
     }
 }

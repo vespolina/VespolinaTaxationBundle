@@ -6,11 +6,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Vespolina\PricingBundle;
+namespace Vespolina\TaxationBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class VespolinaPricingBundle extends Bundle
+class VespolinaTaxationBundle extends Bundle
 {
 
 }
