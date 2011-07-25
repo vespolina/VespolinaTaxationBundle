@@ -2,26 +2,31 @@
 /**
  * (c) Vespolina Project http://www.vespolina-project.org
  *
- * (c) Daniel Kucharski <daniel@xerias.be>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
 namespace Vespolina\TaxationBundle\Model;
 
+use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
 use Vespolina\TaxationBundle\Model\TaxRateInterface;
 use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 
+/**
+ * @author Daniel Kucharski <daniel@xerias.be>
+ */
 class TaxZone implements TaxZoneInterface
 {
     protected $code;
     protected $name;
     protected $rates;
+    protected $zones;
 
     public function __construct()
     {
 
         $this->rates = array();
+        $this->zones = array();
 
     }
 
@@ -31,8 +36,18 @@ class TaxZone implements TaxZoneInterface
     public function addRate(TaxRateInterface $rate)
     {
 
-        $this->rate[$rate->getCode()] = $rate;
+        $this->rates[$rate->getCategory()->getCode()][$rate->getCode()] = $rate;
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function addZone(TaxZone $zone)
+    {
+
+        $this->zones[$zone->getCode()] = $zone;
+    }
+
 
     /**
      * @inheritdoc
@@ -55,10 +70,10 @@ class TaxZone implements TaxZoneInterface
     /**
      * @inheritdoc
      */
-    public function getRates()
+    public function getRates(TaxCategoryInterface $category)
     {
 
-        return $this->rates;
+        return $this->rates[$category->getCode()];
     }
     /**
      * @inheritdoc
