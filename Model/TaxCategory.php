@@ -19,7 +19,7 @@ use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
  */
 class TaxCategory implements TaxCategoryInterface
 {
-    protected $id;
+    protected $code;
     protected $name;
 
     public function __construct()
@@ -30,10 +30,10 @@ class TaxCategory implements TaxCategoryInterface
     /**
      * @inheritdoc
      */
-    public function getId()
+    public function getCode()
     {
 
-        return $this->id;
+        return $this->code;
     }
 
     /**
@@ -48,9 +48,9 @@ class TaxCategory implements TaxCategoryInterface
     /**
      * @inheritdoc
      */
-    public function setId($id)
+    public function setCode($code)
     {
-        $this->id = $id;
+        $this->code = $code;
     }
 
     /**

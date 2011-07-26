@@ -2,15 +2,19 @@
 /**
  * (c) Vespolina Project http://www.vespolina-project.org
  *
- * (c) Daniel Kucharski <daniel@xerias.be>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
  
 namespace Vespolina\TaxationBundle\Model;
 
+use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
 use Vespolina\TaxationBundle\Model\TaxRateInterface;
 
+
+/**
+ * @author Daniel Kucharski <daniel@xerias.be>
+ */
 interface TaxZoneInterface
 {
 
@@ -23,6 +27,14 @@ interface TaxZoneInterface
      */
     function addRate(TaxRateInterface $rate);
 
+    /**
+     * Add sub zone
+     *
+     * @abstract
+     * @param TaxZone $zone
+     * @return void
+     */
+    function addZone(TaxZone $zone);
 
     /**
      * Get tax zone code (should be unique)
@@ -40,7 +52,16 @@ interface TaxZoneInterface
      * @abstract
      * @return void
      */
-    function getRates();
+    function getRates(TaxCategoryInterface $category);
+
+    /**
+     * Retrieve a sub zone by it's code
+     *
+     * @abstract
+     * @param $code
+     * @return void
+     */
+    function getZone($code);
 
     /**
      * Set the tax zone code

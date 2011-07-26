@@ -18,23 +18,23 @@ namespace Vespolina\TaxationBundle\Model;
 interface TaxCategoryInterface
 {
     /**
-     * Get unique identifier
+     * Get code
      */
-    public function getId();
+    function getCode();
 
     /**
      * Name of the tax category
      */
-    public function getName();
+    function getName();
 
     /**
-     * Set the tax category id
+     * Set the code
      *
      * @abstract
-     * @param  $id
+     * @param  $code
      * @return void
      */
-    public function setId($id);
+    function setCode($code);
 
     /**
      * Set the tax category name
@@ -43,5 +43,5 @@ interface TaxCategoryInterface
      * @param  $name
      * @return void
      */
-    public function setName($name);
+    function setName($name);
 }

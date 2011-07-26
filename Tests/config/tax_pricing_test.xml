@@ -41,28 +41,28 @@
                 <target>packaging_cost</target>
                 <execution_event>context_independent</execution_event>
             </step>
-            <step name="determine_vat_rate">
-                <class>Vespolina\TaxationBundle\Model\PricingExecutionStep\DetermineVATRate</class>
-                <target>vat_rate</target>
-                <strategy>region_based</strategy>
+            <step name="determine_tax_rate">
+                <class>Vespolina\TaxationBundle\Model\PricingExecutionStep\DetermineTaxRate</class>
+                <target>tax_rate</target>
+                <strategy>tax_zone_based</strategy>
                 <execution_event>context_dependent</execution_event>
             </step>
-            <step name="calculate_total_excl_vat">
+            <step name="calculate_total_excl_tax">
                 <class>Vespolina\PricingBundle\Model\PricingExecutionStep\ContainerCompute</class>
                 <source>packaging_cost + net_value</source>
-                <target>total_excl_vat</target>
+                <target>total_excl_tax</target>
                 <execution_event>context_independent</execution_event>
             </step>
-            <step name="calculate_total_vat">
+            <step name="calculate_total_tax">
                 <class>Vespolina\PricingBundle\Model\PricingExecutionStep\ContainerCompute</class>
-                <source>vat_rate * total_excl_vat / 100</source>
-                <target>total_vat</target>
+                <source>tax_rate * total_excl_tax / 100</source>
+                <target>total_tax</target>
                 <execution_event>context_dependent</execution_event>
             </step>
-            <step name="calculate_total_incl_vat">
+            <step name="calculate_total_incl_tax">
                 <class>Vespolina\PricingBundle\Model\PricingExecutionStep\ContainerCompute</class>
-                <source>total_excl_vat + total_vat</source>
-                <target>total_incl_vat</target>
+                <source>total_excl_tax + total_tax</source>
+                <target>total_incl_tax</target>
                 <execution_event>context_dependent</execution_event>
             </step>
          </pricing_execution>
