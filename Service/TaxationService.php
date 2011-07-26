@@ -27,6 +27,11 @@ class TaxationService extends ContainerAware implements TaxationServiceInterface
 
     protected $zones;
 
+    public function __construct() {
+
+        $this->zones = array();
+    }
+  
     /**
      * @inheritdoc
      */
@@ -79,11 +84,38 @@ class TaxationService extends ContainerAware implements TaxationServiceInterface
      */
     public function getZoneByCode($code)
     {
-
         if (array_key_exists($code, $this->zones)) {
 
             return $this->zones[$code];
         }
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getZoneByCodePath($code)
+    {
+
+        $zone = null;
+
+        //Traverse the path if a "." exists
+        if (strpos($code, '.')) {
+
+            foreach( explode('.', $code) as $part) {
+
+                if ($zone) {
+
+                    $zone = $zone->getZone($part);
+
+                } else {
+              
+                    $zone = $this->getZoneByCode($part);
+
+
+                }
+            }
+        }
+
+        return $zone;
+    }
 }

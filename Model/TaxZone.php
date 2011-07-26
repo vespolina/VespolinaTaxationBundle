@@ -73,8 +73,20 @@ class TaxZone implements TaxZoneInterface
     public function getRates(TaxCategoryInterface $category)
     {
 
-        return $this->rates[$category->getCode()];
+       return $this->rates[$category->getCode()];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getZone($code)
+    {
+        if (array_key_exists($code, $this->zones)) {
+
+            return $this->zones[$code];
+        }
+    }
+    
     /**
      * @inheritdoc
      */

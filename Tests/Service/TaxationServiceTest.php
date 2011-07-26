@@ -41,8 +41,8 @@ class TaxationServiceTest extends WebTestCase
 
         $taxZoneBE = $taxationService->createZone('be', 'Belgium');
 
-        $taxRateBE6 = $taxationService->createRateForZone('21%', 21, $vatTaxCategory, $taxZoneBE);
-        $taxRateBE21 = $taxationService->createRateForZone('6%', 6, $vatTaxCategory, $taxZoneBE);
+        $taxRateBE6 = $taxationService->createRateForZone('be21', 21, $vatTaxCategory, $taxZoneBE);
+        $taxRateBE21 = $taxationService->createRateForZone('be6', 6, $vatTaxCategory, $taxZoneBE);
 
 
         //Test retrieval of a registered zone
@@ -63,18 +63,32 @@ class TaxationServiceTest extends WebTestCase
         $taxZoneUS = $taxationService->createZone('us', 'United States');
         $taxZoneNY = $taxationService->createZone('ny', 'New York', $taxZoneUS);
         $taxZoneOR = $taxationService->createZone('or', 'Oregon', $taxZoneUS);
-        $taxZoneNYUtica = $taxationService->createZone('utica', 'Utica', $taxZoneNY);
+        $taxZoneNYUtica = $taxationService->createZone('ut', 'Utica', $taxZoneNY);
 
         $taxRateNYUtica = $taxationService->createRateForZone('sales_tax', 8.75, $salesTaxCategory, $taxZoneNYUtica);
 
         //Oregon has no sales tax
         $taxRateOR = $taxationService->createRateForZone('sales_tax', 0, $salesTaxCategory, $taxZoneOR);
-                    
+
+        //Test retrieval of a registered zone
+        $testTaZoneUS = $taxationService->getZoneByCode('us');
+
+        $this->assertEquals($testTaZoneUS->getCode(), 'us');
+
+        //Test retrieval of a registered sub sub zone
+        $testTaZoneUtica = $taxationService->getZoneByCodePath('us.ny.ut');
+        $this->assertEquals($testTaZoneUtica->getCode(), 'ut');
+
+
     }
+
+
 
 
     public function testCalculateTax()
     {
+        $this->testCreateTaxationZonesAndRatesForBE();
+
         $pricingService = $this->getKernel()->getContainer()->get('vespolina.pricing');
         $pricingService->loadPricingConfigurationFile(__DIR__.'/../config','tax_pricing_test.xml');
 
@@ -110,7 +124,7 @@ class TaxationServiceTest extends WebTestCase
         $this->assertEquals($invalidArgumentExceptionRaised, 1);
 
         //Fix the error by setting the country
-        $pricingContextContainer->set('country', 'BE');
+        $pricingContextContainer->set('country', 'be');
 
         try{
             $pricingService->buildPricingSet(
@@ -125,7 +139,7 @@ class TaxationServiceTest extends WebTestCase
 
         $this->assertEquals($invalidArgumentExceptionRaised, 1);
 
-        $this->assertEquals($pricingContextContainer->get('total_vat'), 22.05);
+        $this->assertEquals($pricingContextContainer->get('total_tax'), 22.05);
         //print_r($pricingContextContainer->getContainerData());
     }
 

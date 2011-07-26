@@ -55,6 +55,15 @@ interface TaxZoneInterface
     function getRates(TaxCategoryInterface $category);
 
     /**
+     * Retrieve a sub zone by it's code
+     *
+     * @abstract
+     * @param $code
+     * @return void
+     */
+    function getZone($code);
+
+    /**
      * Set the tax zone code
      *
      * @abstract
