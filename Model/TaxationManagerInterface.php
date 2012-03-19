@@ -6,7 +6,7 @@
  * with this source code in the file LICENSE.
  */
  
-namespace Vespolina\TaxationBundle\Service;
+namespace Vespolina\TaxationBundle\Model;
 
 use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
 use Vespolina\TaxationBundle\Model\TaxRateInterface;
@@ -15,7 +15,7 @@ use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-interface TaxationServiceInterface
+interface TaxationManagerInterface
 {
     /**
      * Create a new rate and attach it to the given zone

@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Vespolina\TaxationBundle\Service;
+namespace Vespolina\TaxationBundle\Model;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -17,12 +17,12 @@ use Vespolina\TaxationBundle\Model\TaxRate;
 use Vespolina\TaxationBundle\Model\TaxRateInterface;
 use Vespolina\TaxationBundle\Model\TaxZone;
 use Vespolina\TaxationBundle\Model\TaxZoneInterface;
-use Vespolina\TaxationBundle\Service\TaxationServiceInterface;
+use Vespolina\TaxationBundle\Model\TaxationManagerInterface;
 
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-class TaxationService extends ContainerAware implements TaxationServiceInterface
+class TaxationManager extends ContainerAware implements TaxationManagerInterface
 {
 
     protected $zones;
