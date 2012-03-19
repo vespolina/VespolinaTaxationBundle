@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <tax_schema>
     <zones>
-        <zone name="belgium" country="BE" state="">
+        <zone name="australia" country="AU" state="">
             <type>vat</type>
-            <selection>default_tax_rate</selection>
+            <selection>flat_tax_rate</selection>
             <tax_rates>
                 <tax_rate default="true">
-                    <rate>21</rate>
-                </tax_rate>
-                <tax_rate>
-                    <rate>6</rate>
+                    <rate>10</rate>
                 </tax_rate>
             </tax_rates>
             <rules>

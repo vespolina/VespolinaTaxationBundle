@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tax_schema>
+    <zones>
+        <zone name="Alabama" country="US" state="US-AL">
+            <type>sales_tax</type>
+            <selection>default_tax_rate</selection>
+            <tax_rates>
+                <tax_rate default="true">
+                    <rate>4</rate>
+                </tax_rate>
+            </tax_rates
+        </zone>
+
+        <zone name="Oregon" country="US" state="US-OR">
+            <type>no_tax</type>
+        </zone>
+    </zones>
+</tax_schema>
