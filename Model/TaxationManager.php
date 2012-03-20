@@ -42,15 +42,18 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
     /**
      * @inheritdoc
      */
-    public function createRateForZone($code, $rate, TaxCategoryInterface $category, TaxZoneInterface $zone)
+    public function createRateForZone($code, $rate, TaxCategoryInterface $taxCategory, TaxZoneInterface $zone)
     {
 
-        $rate = new $this->taxRateClass;
-        $rate->setCategory($category);
-        $rate->setCode($zone->getCode() . '_' . $code);
-        $zone->addRate($rate);
+        $taxRate = new $this->taxRateClass;
+        $taxRate->setRate($rate);
+        $taxRate->setTaxCategory($taxCategory);
+        $taxRate->setCode($zone->getCode() . '_' . $code);
+        $taxRate->setTaxZone($zone);
+
+        $zone->addRate($taxRate);
         
-        return $rate;
+        return $taxRate;
     }
 
 
@@ -84,9 +87,9 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
     /**
      * @inheritdoc
      */
-    public function getRatesForZone(TaxZoneInterface $zone, TaxCategoryInterface $category)
+    public function getRatesForZone(TaxZoneInterface $zone, TaxCategoryInterface $taxCategory)
     {
-        return $zone->getRates($category);
+        return $zone->getRates($taxCategory);
     }
 
     /**
@@ -143,8 +146,13 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
 
             $location = ($state? $country . '-' . $state : $country);
 
+            $selection = (string)$xmlZone->zone->selection;
+            $type = (string)$xmlZone->zone->type;
+
             //Create the zone
             $zone = $this->createZone($location, $name);
+            $zone->setSelection($selection);
+            $zone->setType($type);
 
             //Create tax rates per zone
             foreach ($xmlZone->zone->tax_rates as $xmlTaxRate) {

@@ -5,8 +5,10 @@
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <document name="Vespolina\TaxationBundle\Document\TaxZone" collection="vespolina_tax_zones">
-        <field name="code"      fieldName="code"    type="string" id="true"/>
-        <field name="name"      fieldName="name"    type="string" />
+        <field name="code"      fieldName="code"        type="string" id="true"/>
+        <field name="name"      fieldName="name"        type="string" />
+        <field name="selection" fieldName="selection"   type="string" nullable="true" />
+        <field name="type"      fieldName="type"        type="string" nullable="true" />
         <embed-many fieldName="rates"
                     field="rates"
                     targetDocument="Vespolina\TaxationBundle\Document\TaxRate"/>

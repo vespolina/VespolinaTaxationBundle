@@ -10,7 +10,6 @@ namespace Vespolina\TaxationBundle\Entity;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\EntityManager;
 
-use Vespolina\TaxationBundle\Entity\Taxation;
 use Vespolina\TaxationBundle\Model\TaxationInterface;
 use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 use Vespolina\TaxationBundle\Model\TaxationManager as BaseTaxationManager;

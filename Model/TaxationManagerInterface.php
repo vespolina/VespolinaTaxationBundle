@@ -26,7 +26,7 @@ interface TaxationManagerInterface
      * @param \Vespolina\TaxationBundle\Model\TaxZoneInterface $zone
      * @return void
      */
-    function createRateForZone($code, $rate, TaxCategoryInterface $category, TaxZoneInterface $zone);
+    function createRateForZone($code, $rate, TaxCategoryInterface $taxCategory, TaxZoneInterface $zone);
 
 
     /**
@@ -46,7 +46,7 @@ interface TaxationManagerInterface
      * @param TaxZoneInterface $taxZone
      * @return array()
      */
-    function getRatesForZone(TaxZoneInterface $zone, TaxCategoryInterface $category);
+    function getRatesForZone(TaxZoneInterface $zone, TaxCategoryInterface $taxCategory);
 
     /**
      * Retrieve a specific tax zone by its code

@@ -17,21 +17,21 @@ use Vespolina\TaxationBundle\Model\TaxRateInterface;
  */
 class TaxRate implements TaxRateInterface
 {
-    protected $category;
+    protected $taxCategory;
     protected $code;
     protected $name;
     protected $rate;
-
+    protected $taxZone;
 
     public function __construct()
     {
 
     }
 
-    public function getCategory()
+    public function getTaxCategory()
     {
 
-        return $this->category;
+        return $this->taxCategory;
     }
     /**
      * @inheritdoc
@@ -63,9 +63,9 @@ class TaxRate implements TaxRateInterface
     /**
      * @inheritdoc
      */
-    public function setCategory(TaxCategoryInterface $category)
+    public function setTaxCategory(TaxCategoryInterface $taxCategory)
     {
-        $this->category = $category;
+        $this->taxCategory = $taxCategory;
     }
     
     /**
@@ -90,5 +90,15 @@ class TaxRate implements TaxRateInterface
     public function setRate($rate)
     {
         $this->rate = $rate;
+    }
+
+    public function setTaxZone($taxZone)
+    {
+        $this->taxZone = $taxZone;
+    }
+
+    public function getTaxZone()
+    {
+        return $this->taxZone;
     }
 }

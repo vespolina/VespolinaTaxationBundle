@@ -21,10 +21,11 @@ class TaxZone implements TaxZoneInterface
     protected $code;
     protected $name;
     protected $rates;
+    protected $selection;
+    protected $type;
 
     public function __construct()
     {
-
         $this->rates = new ArrayCollection();
     }
 
@@ -78,5 +79,25 @@ class TaxZone implements TaxZoneInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function setSelection($selection)
+    {
+        $this->selection = $selection;
+    }
+
+    public function getSelection()
+    {
+        return $this->selection;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getType()
+    {
+        return $this->type;
     }
 }

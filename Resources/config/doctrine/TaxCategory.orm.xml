@@ -8,6 +8,6 @@
             <generator strategy="AUTO" />
         </id>
         <field name="code"      fieldName="code"    type="string" id="true"/>
-        <field name="name"      fieldName="name"    type="string" />
+        <field name="name"      fieldName="name"    type="string" nullable="true"/>
     </entity>
 </doctrine-mapping>
