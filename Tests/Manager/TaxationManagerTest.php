@@ -8,8 +8,6 @@ use Vespolina\TaxationBundle\Model\TaxZone;
 use Vespolina\TaxationBundle\Model\TaxCategory\SalesTaxCategory;
 use Vespolina\TaxationBundle\Model\TaxCategory\VATTaxCategory;
 
-
-
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
@@ -46,12 +44,12 @@ class TaxationManagerTest extends WebTestCase
 
 
         //Test retrieval of a registered zone
-        $testTaZoneBe = $taxationManager->getZoneByCode('be');
+        $testTaZoneBe = $taxationManager->findZoneByCode('be');
 
         $this->assertEquals($testTaZoneBe->getName(), 'Belgium');
 
         $taxRatesForBE = $taxationManager->getRatesForZone($testTaZoneBe, $vatTaxCategory);
-        $this->assertEquals(count($taxRatesForBE), 2);
+        $this->assertEquals($taxRatesForBE->count(), 2);
     }
 
     public function testCreateTaxationZonesAndRatesForUS()
@@ -61,9 +59,9 @@ class TaxationManagerTest extends WebTestCase
         $salesTaxCategory = new \Vespolina\TaxationBundle\Model\TaxCategory\SalesTaxCategory();
                
         $taxZoneUS = $taxationManager->createZone('us', 'United States');
-        $taxZoneNY = $taxationManager->createZone('ny', 'New York', $taxZoneUS);
-        $taxZoneOR = $taxationManager->createZone('or', 'Oregon', $taxZoneUS);
-        $taxZoneNYUtica = $taxationManager->createZone('ut', 'Utica', $taxZoneNY);
+        $taxZoneNY = $taxationManager->createZone('us-ny', 'New York');
+        $taxZoneOR = $taxationManager->createZone('us-or', 'Oregon');
+        $taxZoneNYUtica = $taxationManager->createZone('us-ny-ut', 'Utica');
 
         $taxRateNYUtica = $taxationManager->createRateForZone('sales_tax', 8.75, $salesTaxCategory, $taxZoneNYUtica);
 
@@ -71,19 +69,28 @@ class TaxationManagerTest extends WebTestCase
         $taxRateOR = $taxationManager->createRateForZone('sales_tax', 0, $salesTaxCategory, $taxZoneOR);
 
         //Test retrieval of a registered zone
-        $testTaZoneUS = $taxationManager->getZoneByCode('us');
+        $testTaZoneUS = $taxationManager->findZoneByCode('us');
 
         $this->assertEquals($testTaZoneUS->getCode(), 'us');
 
         //Test retrieval of a registered sub sub zone
-        $testTaZoneUtica = $taxationManager->getZoneByCodePath('us.ny.ut');
-        $this->assertEquals($testTaZoneUtica->getCode(), 'ut');
+        $testTaZoneUtica = $taxationManager->findZoneByCode('us-ny-ut');
+        $this->assertEquals($testTaZoneUtica->getCode(), 'us-ny-ut');
 
 
     }
 
 
+    public function testLoadTaxSchema()
+    {
+        $taxationManager = $this->getKernel()->getContainer()->get('vespolina.taxation_manager');
 
+        $zones = $taxationManager->loadTaxSchema('be');
+        foreach($zones as $zone) {
+            $taxationManager->updateTaxZone($zone);
+        }
+
+    }
 
     public function testCalculateTax()
     {

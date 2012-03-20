@@ -8,6 +8,7 @@
 
 namespace Vespolina\TaxationBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
 use Vespolina\TaxationBundle\Model\TaxRateInterface;
 use Vespolina\TaxationBundle\Model\TaxZoneInterface;
@@ -20,14 +21,11 @@ class TaxZone implements TaxZoneInterface
     protected $code;
     protected $name;
     protected $rates;
-    protected $zones;
 
     public function __construct()
     {
 
-        $this->rates = array();
-        $this->zones = array();
-
+        $this->rates = new ArrayCollection();
     }
 
     /**
@@ -36,19 +34,9 @@ class TaxZone implements TaxZoneInterface
     public function addRate(TaxRateInterface $rate)
     {
 
-        $this->rates[$rate->getCategory()->getCode()][$rate->getCode()] = $rate;
+        $this->rates->set($rate->getCode(), $rate);
     }
     
-    /**
-     * @inheritdoc
-     */
-    public function addZone(TaxZone $zone)
-    {
-
-        $this->zones[$zone->getCode()] = $zone;
-    }
-
-
     /**
      * @inheritdoc
      */
@@ -70,23 +58,12 @@ class TaxZone implements TaxZoneInterface
     /**
      * @inheritdoc
      */
-    public function getRates(TaxCategoryInterface $category)
+    public function getRates(TaxCategoryInterface $category = null)
     {
 
-       return $this->rates[$category->getCode()];
+       return $this->rates;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getZone($code)
-    {
-        if (array_key_exists($code, $this->zones)) {
-
-            return $this->zones[$code];
-        }
-    }
-    
     /**
      * @inheritdoc
      */

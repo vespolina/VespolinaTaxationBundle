@@ -35,10 +35,9 @@ interface TaxationManagerInterface
      * @abstract
      * @param $code Tax code
      * @param $name Descriptive name
-     * @param $parentZone The parent zone
      * @return TaxZoneInterface instance
      */
-    function createZone($code, $name, TaxZoneInterface $parentZone = null);
+    function createZone($code, $name);
 
     /**
      * Get all tax rates for a given zone
@@ -52,5 +51,5 @@ interface TaxationManagerInterface
     /**
      * Retrieve a specific tax zone by its code
      */
-    function getZoneByCode($code);
+    function findZoneByCode($code);
 }

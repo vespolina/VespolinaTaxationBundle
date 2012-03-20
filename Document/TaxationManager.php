@@ -10,8 +10,8 @@ namespace Vespolina\TaxationBundle\Document;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-use Vespolina\TaxationBundle\Document\Taxation;
-use Vespolina\TaxationBundle\Model\TaxationInterface;
+use Vespolina\TaxationBundle\Document\TaxZone;
+use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 use Vespolina\TaxationBundle\Model\TaxationManager as BaseTaxationManager;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
@@ -19,20 +19,27 @@ use Vespolina\TaxationBundle\Model\TaxationManager as BaseTaxationManager;
  */
 class TaxationManager extends BaseTaxationManager
 {
-    protected $taxationClass;
     protected $taxationRepo;
     protected $dm;
     protected $primaryIdentifier;
 
-    public function __construct(DocumentManager $dm, $taxationClass = '')
+    public function __construct(DocumentManager $dm, $taxCategoryClass, $taxRateClass, $taxZoneClass)
     {
         $this->dm = $dm;
 
-        $this->taxationClass = $taxationClass;
-        //$this->taxationRepo = $this->dm->getRepository($taxationClass);
+        $this->taxZoneRepo = $this->dm->getRepository($taxZoneClass);
 
-        parent::__construct($taxationClass);
+        parent::__construct($taxCategoryClass, $taxRateClass, $taxZoneClass);
     }
 
-
+    /**
+     * @inheritdoc
+     */
+    public function updateTaxZone(TaxZoneInterface $taxZone, $andFlush = true)
+    {
+        $this->dm->persist($taxZone);
+        if ($andFlush) {
+            $this->dm->flush();
+        }
+    }
 }

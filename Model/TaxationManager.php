@@ -9,6 +9,7 @@
 
 namespace Vespolina\TaxationBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -25,11 +26,17 @@ use Vespolina\TaxationBundle\Model\TaxationManagerInterface;
 class TaxationManager extends ContainerAware implements TaxationManagerInterface
 {
 
+    protected $taxCategoryClass;
+    protected $taxRateClass;
+    protected $taxZoneClass;
     protected $zones;
 
-    public function __construct() {
+    public function __construct($taxCategoryClass, $taxRateClass, $taxZoneClass) {
 
-        $this->zones = array();
+        $this->taxCategoryClass = $taxCategoryClass;
+        $this->taxRateClass = $taxRateClass;
+        $this->taxZoneClass = $taxZoneClass;
+        $this->zones = new ArrayCollection();
     }
   
     /**
@@ -38,7 +45,7 @@ class TaxationManager extends ContainerAware implements TaxationManagerInterface
     public function createRateForZone($code, $rate, TaxCategoryInterface $category, TaxZoneInterface $zone)
     {
 
-        $rate = new TaxRate();
+        $rate = new $this->taxRateClass;
         $rate->setCategory($category);
         $rate->setCode($zone->getCode() . '_' . $code);
         $zone->addRate($rate);
@@ -50,23 +57,28 @@ class TaxationManager extends ContainerAware implements TaxationManagerInterface
     /**
      * @inheritdoc
      */
-    public function createZone($code, $name, TaxZoneInterface $parentZone = null)
+    public function createZone($code, $name)
     {
 
-        $zone = new TaxZone();
+        $zone = new $this->taxZoneClass;
         $zone->setCode($code);
         $zone->setName($name);
 
-        if ($parentZone) {
-            
-            $parentZone->addZone($zone);
-            
-        } else {
-
-            $this->zones[$code] = $zone;
-        }
+        $this->zones->set($code, $zone);
 
         return $zone;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createTaxCategory($code, $name)
+    {
+        $taxCategory = new $this->taxCategoryClass;
+        $taxCategory->setCode($code);
+        $taxCategory->setName($name);
+
+        return $taxCategory;
     }
 
     /**
@@ -74,48 +86,77 @@ class TaxationManager extends ContainerAware implements TaxationManagerInterface
      */
     public function getRatesForZone(TaxZoneInterface $zone, TaxCategoryInterface $category)
     {
-
         return $zone->getRates($category);
-
     }
 
     /**
      * @inheritdoc
      */
-    public function getZoneByCode($code)
+    public function findZoneByCode($code)
     {
-        if (array_key_exists($code, $this->zones)) {
+        return $this->zones->get($code);
+    }
 
-            return $this->zones[$code];
+
+    public function loadTaxSchema($country) {
+
+        $zones = array();
+
+        $xmlFile = __DIR__ . '/../Resources/config/taxschemas/' . strtolower($country) . '.xml';
+        if (!$xmlZones = simplexml_load_file($xmlFile)) {
+
+            return $zones;
         }
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function getZoneByCodePath($code)
-    {
+        //Init tax categories
+        $defaultTaxCategory = $this->createTaxCategory('default', 'default');
 
-        $zone = null;
-
-        //Traverse the path if a "." exists
-        if (strpos($code, '.')) {
-
-            foreach( explode('.', $code) as $part) {
-
-                if ($zone) {
-
-                    $zone = $zone->getZone($part);
-
-                } else {
-              
-                    $zone = $this->getZoneByCode($part);
+        //Create zones
+        foreach ($xmlZones as $xmlZone) {
 
 
+            $country = '';
+            $name = '';
+            $selection = (string)$xmlZone->selection;
+            $state = '';
+            $type = (string)$xmlZone->type;
+
+            //Get regional information for this zone
+            foreach ($xmlZone->zone->attributes() as $name => $value) {
+
+                switch ($name) {
+                    case 'country':
+                        $country = (string)$value;
+                        break;
+                    case 'name':
+                        $name = (string)$value;
+                        break;
+                    case 'state':
+                        $state = (string)$value;
+                        break;
                 }
             }
+
+            if (!$country && !$state) {
+                continue;
+            }
+
+            $location = ($state? $country . '-' . $state : $country);
+
+            //Create the zone
+            $zone = $this->createZone($location, $name);
+
+            //Create tax rates per zone
+            foreach ($xmlZone->zone->tax_rates as $xmlTaxRate) {
+
+                $taxRate = (string)$xmlTaxRate->tax_rate->rate;
+
+                $this->createRateForZone($taxRate, $taxRate, $defaultTaxCategory, $zone);
+            }
+
+            $zones[] = $zone;
         }
 
-        return $zone;
+        return $zones;
     }
 }

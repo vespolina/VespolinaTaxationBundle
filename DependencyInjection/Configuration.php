@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('db_driver')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('tax_mode')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
+//                ->scalarNode('tax_mode')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
             ->end();
 
         return $treeBuilder;
