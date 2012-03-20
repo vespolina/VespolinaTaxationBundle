@@ -23,7 +23,7 @@ use Vespolina\TaxationBundle\Model\TaxationManagerInterface;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-class TaxationManager extends ContainerAware implements TaxationManagerInterface
+abstract class TaxationManager extends ContainerAware implements TaxationManagerInterface
 {
 
     protected $taxCategoryClass;
@@ -122,17 +122,17 @@ class TaxationManager extends ContainerAware implements TaxationManagerInterface
             $type = (string)$xmlZone->type;
 
             //Get regional information for this zone
-            foreach ($xmlZone->zone->attributes() as $name => $value) {
+            foreach ($xmlZone->zone->attributes() as $xmlName => $xmlValue) {
 
-                switch ($name) {
+                switch ($xmlName) {
                     case 'country':
-                        $country = (string)$value;
+                        $country = (string)$xmlValue;
                         break;
                     case 'name':
-                        $name = (string)$value;
+                        $name = (string)$xmlValue;
                         break;
                     case 'state':
-                        $state = (string)$value;
+                        $state = (string)$xmlValue;
                         break;
                 }
             }

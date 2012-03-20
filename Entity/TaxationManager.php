@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 
 use Vespolina\TaxationBundle\Entity\Taxation;
 use Vespolina\TaxationBundle\Model\TaxationInterface;
+use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 use Vespolina\TaxationBundle\Model\TaxationManager as BaseTaxationManager;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
@@ -21,17 +22,26 @@ class TaxationManager extends BaseTaxationManager
 {
     protected $taxationClass;
     protected $taxationRepo;
-    protected $dm;
+    protected $em;
 
-    public function __construct(EntityManager $em, $taxationClass = '')
+    public function __construct(EntityManager $em, $taxCategoryClass, $taxRateClass, $taxZoneClass)
     {
         $this->em = $em;
 
-        $this->taxationClass = $taxationClass;
-        //$this->taxationRepo = $this->dm->getRepository($taxationClass);
+        $this->taxZoneRepo = $this->em->getRepository($taxZoneClass);
 
-        parent::__construct($taxationClass);
+        parent::__construct($taxCategoryClass, $taxRateClass, $taxZoneClass);
+
     }
 
-
+    /**
+     * @inheritdoc
+     */
+    public function updateTaxZone(TaxZoneInterface $taxZone, $andFlush = true)
+    {
+        $this->em->persist($taxZone);
+        if ($andFlush) {
+            $this->em->flush();
+        }
+    }
 }
