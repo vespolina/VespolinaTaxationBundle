@@ -19,9 +19,12 @@ use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 class TaxZone implements TaxZoneInterface
 {
     protected $code;
+    protected $country;
+    protected $defaultRate;
     protected $name;
     protected $rates;
     protected $selection;
+    protected $state;
     protected $type;
 
     public function __construct()
@@ -99,5 +102,35 @@ class TaxZone implements TaxZoneInterface
     public function getType()
     {
         return $this->type;
+    }
+
+    public function setDefaultRate($defaultRate)
+    {
+        $this->defaultRate = $defaultRate;
+    }
+
+    public function getDefaultRate()
+    {
+        return $this->defaultRate;
+    }
+
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    public function getState()
+    {
+        return $this->state;
     }
 }

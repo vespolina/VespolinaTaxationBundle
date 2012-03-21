@@ -85,8 +85,8 @@ class TaxationManagerTest extends WebTestCase
     {
         $taxationManager = $this->getKernel()->getContainer()->get('vespolina.taxation_manager');
 
-        $zones = $taxationManager->loadTaxSchema('be');
-        foreach($zones as $zone) {
+        $taxSchema = $taxationManager->loadTaxSchema('us');
+        foreach($taxSchema['zones'] as $zone) {
             $taxationManager->updateTaxZone($zone);
         }
 

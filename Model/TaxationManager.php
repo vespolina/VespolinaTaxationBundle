@@ -103,19 +103,20 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
 
     public function loadTaxSchema($country) {
 
+        $taxSchema = array();
         $zones = array();
 
         $xmlFile = __DIR__ . '/../Resources/config/taxschemas/' . strtolower($country) . '.xml';
         if (!$xmlZones = simplexml_load_file($xmlFile)) {
 
-            return $zones;
+            //Todo throw err
         }
 
         //Init tax categories
         $defaultTaxCategory = $this->createTaxCategory('default', 'default');
 
         //Create zones
-        foreach ($xmlZones as $xmlZone) {
+        foreach ($xmlZones->zones->zone as $xmlZone) {
 
 
             $country = '';
@@ -125,7 +126,7 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
             $type = (string)$xmlZone->type;
 
             //Get regional information for this zone
-            foreach ($xmlZone->zone->attributes() as $xmlName => $xmlValue) {
+            foreach ($xmlZone->attributes() as $xmlName => $xmlValue) {
 
                 switch ($xmlName) {
                     case 'country':
@@ -146,25 +147,45 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
 
             $location = ($state? $country . '-' . $state : $country);
 
-            $selection = (string)$xmlZone->zone->selection;
-            $type = (string)$xmlZone->zone->type;
+            $selection = (string)$xmlZone->selection;
+            $type = (string)$xmlZone->type;
 
             //Create the zone
             $zone = $this->createZone($location, $name);
+            $zone->setCountry($country);
+            $zone->setState($state);
             $zone->setSelection($selection);
             $zone->setType($type);
 
+
+            $defaultTaxRate = 0;
             //Create tax rates per zone
-            foreach ($xmlZone->zone->tax_rates as $xmlTaxRate) {
+            foreach ($xmlZone->tax_rates as $xmlTaxRate) {
 
                 $taxRate = (string)$xmlTaxRate->tax_rate->rate;
 
+                foreach ($xmlTaxRate->tax_rate->attributes() as $xmlName => $xmlValue) {
+
+                    switch ($xmlName) {
+                        case 'default':
+                            if ((string)$xmlValue == 'true' ) {
+
+                                $defaultTaxRate = $zone->getDefaultRate();
+                            }
+                            break;
+                    }
+                }
                 $this->createRateForZone($taxRate, $taxRate, $defaultTaxCategory, $zone);
             }
+
+            $zone->setDefaultRate($defaultTaxRate);
 
             $zones[] = $zone;
         }
 
-        return $zones;
+        $taxSchema['zones'] = $zones;
+        $taxSchema['tax_enabled'] = count($zones) != 0 ? true: false;
+
+        return $taxSchema;
     }
 }
