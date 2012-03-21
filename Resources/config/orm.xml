@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+	 <parameters>
+        <parameter key="vespolina.taxation.taxation_manager.class">Vespolina\TaxationBundle\Entity\TaxationManager</parameter>
+        <parameter key="vespolina.taxation.model.tax_category.class">Vespolina\TaxationBundle\Entity\TaxCategory</parameter>
+        <parameter key="vespolina.taxation.model.tax_rate.class">Vespolina\TaxationBundle\Entity\TaxRate</parameter>
+        <parameter key="vespolina.taxation.model.tax_zone.class">Vespolina\TaxationBundle\Entity\TaxZone</parameter>
+    </parameters>
+
+	
+    <services>
+        <service id="vespolina.taxation.taxation_manager" class="%vespolina.taxation.taxation_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%vespolina.taxation.model.tax_category.class%</argument>
+            <argument>%vespolina.taxation.model.tax_rate.class%</argument>
+            <argument>%vespolina.taxation.model.tax_zone.class%</argument>
+        </service>
+        <service id="vespolina.taxation_manager" alias="vespolina.taxation.taxation_manager" />
+
+    </services>
+</container>

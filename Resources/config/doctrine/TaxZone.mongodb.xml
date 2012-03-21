@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                        http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <document name="Vespolina\TaxationBundle\Document\TaxZone" collection="vespolina_tax_zones">
+        <field name="code"          fieldName="code"        type="string" id="true"/>
+        <field name="country"       fieldName="country"     type="string"/>
+        <field name="defaultRate"   fieldName="defaultRate" type="float" />
+        <field name="name"          fieldName="name"        type="string" />
+        <field name="selection"     fieldName="selection"   type="string"/>
+        <field name="state"         fieldName="state"       type="string" />
+        <field name="type"          fieldName="type"        type="string"/>
+        <embed-many fieldName="rates"
+                    field="rates"
+                    targetDocument="Vespolina\TaxationBundle\Document\TaxRate"
+                    strategy="set"/>
+    </document>
+</doctrine-mongo-mapping>

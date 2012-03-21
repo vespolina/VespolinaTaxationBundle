@@ -28,15 +28,6 @@ interface TaxZoneInterface
     function addRate(TaxRateInterface $rate);
 
     /**
-     * Add sub zone
-     *
-     * @abstract
-     * @param TaxZone $zone
-     * @return void
-     */
-    function addZone(TaxZone $zone);
-
-    /**
      * Get tax zone code (should be unique)
      */
     function getCode();
@@ -52,16 +43,7 @@ interface TaxZoneInterface
      * @abstract
      * @return void
      */
-    function getRates(TaxCategoryInterface $category);
-
-    /**
-     * Retrieve a sub zone by it's code
-     *
-     * @abstract
-     * @param $code
-     * @return void
-     */
-    function getZone($code);
+    function getRates(TaxCategoryInterface $category = null);
 
     /**
      * Set the tax zone code

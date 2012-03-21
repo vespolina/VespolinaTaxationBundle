@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Vespolina\TaxationBundle\Entity\TaxZone" table="tax_zone">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="code"          fieldName="code"        type="string" />
+        <field name="country"       fieldName="country"     type="string"/>
+        <field name="defaultRate"   fieldName="defaultRate" type="float" />
+        <field name="name"          fieldName="name"        type="string" />
+        <field name="selection"     fieldName="selection"   type="string" />
+        <field name="state"         fieldName="state"       type="string"/>
+        <field name="type"          fieldName="type"        type="string" />
+        <one-to-many field="rates" target-entity="Vespolina\TaxationBundle\Entity\TaxRate" mapped-by="taxZone">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

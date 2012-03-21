@@ -6,7 +6,7 @@
  * with this source code in the file LICENSE.
  */
  
-namespace Vespolina\TaxationBundle\Service;
+namespace Vespolina\TaxationBundle\Model;
 
 use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
 use Vespolina\TaxationBundle\Model\TaxRateInterface;
@@ -15,7 +15,7 @@ use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-interface TaxationServiceInterface
+interface TaxationManagerInterface
 {
     /**
      * Create a new rate and attach it to the given zone
@@ -26,7 +26,7 @@ interface TaxationServiceInterface
      * @param \Vespolina\TaxationBundle\Model\TaxZoneInterface $zone
      * @return void
      */
-    function createRateForZone($code, $rate, TaxCategoryInterface $category, TaxZoneInterface $zone);
+    function createRateForZone($code, $rate, TaxCategoryInterface $taxCategory, TaxZoneInterface $zone);
 
 
     /**
@@ -35,10 +35,9 @@ interface TaxationServiceInterface
      * @abstract
      * @param $code Tax code
      * @param $name Descriptive name
-     * @param $parentZone The parent zone
      * @return TaxZoneInterface instance
      */
-    function createZone($code, $name, TaxZoneInterface $parentZone = null);
+    function createZone($code, $name);
 
     /**
      * Get all tax rates for a given zone
@@ -47,10 +46,10 @@ interface TaxationServiceInterface
      * @param TaxZoneInterface $taxZone
      * @return array()
      */
-    function getRatesForZone(TaxZoneInterface $zone, TaxCategoryInterface $category);
+    function getRatesForZone(TaxZoneInterface $zone, TaxCategoryInterface $taxCategory);
 
     /**
      * Retrieve a specific tax zone by its code
      */
-    function getZoneByCode($code);
+    function findZoneByCode($code);
 }
