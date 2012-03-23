@@ -165,12 +165,11 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
                 $taxRate = (string)$xmlTaxRate->tax_rate->rate;
 
                 foreach ($xmlTaxRate->tax_rate->attributes() as $xmlName => $xmlValue) {
-
-                    switch ($xmlName) {
+                    switch ((string)$xmlName) {
                         case 'default':
                             if ((string)$xmlValue == 'true' ) {
 
-                                $defaultTaxRate = $zone->getDefaultRate();
+                                $defaultTaxRate = $taxRate;
                             }
                             break;
                     }
