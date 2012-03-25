@@ -11,9 +11,6 @@
                 <tax_rate>
                     <rate>10</rate>
                 </tax_rate>
-                <tax_rate>
-                    <rate>0</rate>
-                </tax_rate>
             </tax_rates>
             <rules>
             </rules>
