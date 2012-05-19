@@ -169,8 +169,7 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
                     switch ($xmlName) {
                         case 'default':
                             if ((string)$xmlValue == 'true' ) {
-
-                                $defaultTaxRate = $zone->getDefaultRate();
+                                $defaultTaxRate = $taxRate;
                             }
                             break;
                     }
