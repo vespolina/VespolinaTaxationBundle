@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tax_schema>
+    <zones>
+        <zone name="Ukraine" country="UA" state="">
+            <type>vat</type>
+            <selection>default_tax_rate</selection>
+            <tax_rates>
+                <tax_rate default="true">
+                    <rate>20</rate>
+                </tax_rate>
+            </tax_rates>
+            <rules>
+            </rules>
+        </zone>
+    </zones>
+</tax_schema>
