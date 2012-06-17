@@ -35,6 +35,14 @@ class TaxationManager extends BaseTaxationManager
     /**
      * @inheritdoc
      */
+    public function findTaxZoneByCode($code)
+    {
+        return $this->taxZoneRepo->findOneByCode($code);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function updateTaxZone(TaxZoneInterface $taxZone, $andFlush = true)
     {
         $this->dm->persist($taxZone);
