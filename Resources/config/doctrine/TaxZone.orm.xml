@@ -8,11 +8,11 @@
             <generator strategy="AUTO" />
         </id>
         <field name="code"          fieldName="code"        type="string" />
-        <field name="country"       fieldName="country"     type="string"/>
-        <field name="defaultRate"   fieldName="defaultRate" type="float" />
+        <field name="country"       fieldName="country"     type="string" nullable="true"/>
+        <field name="defaultRate"   fieldName="defaultRate" type="float"  nullable="true"/>
         <field name="name"          fieldName="name"        type="string" />
-        <field name="selection"     fieldName="selection"   type="string" />
-        <field name="state"         fieldName="state"       type="string"/>
+        <field name="selection"     fieldName="selection"   type="string" nullable="true"/>
+        <field name="state"         fieldName="state"       type="string" nullable="true"/>
         <field name="type"          fieldName="type"        type="string" />
         <one-to-many field="rates" target-entity="Vespolina\TaxationBundle\Entity\TaxRate" mapped-by="taxZone">
             <cascade>
