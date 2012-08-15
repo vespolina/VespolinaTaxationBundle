@@ -14,7 +14,7 @@
 	
     <services>
         <service id="vespolina.taxation.taxation_manager" class="%vespolina.taxation.taxation_manager.class%">
-            <argument type="service" id="doctrine.odm.mongodb.default_document_manager" />
+            <argument type="service" id="doctrine_mongodb.odm.default_document_manager" />
             <argument>%vespolina.taxation.model.tax_category.class%</argument>
             <argument>%vespolina.taxation.model.tax_rate.class%</argument>
             <argument>%vespolina.taxation.model.tax_zone.class%</argument>
