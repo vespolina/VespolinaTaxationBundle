@@ -33,6 +33,7 @@ class TaxRate implements TaxRateInterface
 
         return $this->taxCategory;
     }
+
     /**
      * @inheritdoc
      */
@@ -67,7 +68,7 @@ class TaxRate implements TaxRateInterface
     {
         $this->taxCategory = $taxCategory;
     }
-    
+
     /**
      * @inheritdoc
      */
