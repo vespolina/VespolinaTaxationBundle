@@ -25,5 +25,5 @@ class SalesTaxCategory extends TaxCategory
 
         return 'sales_tax';
     }
- 
+
 }

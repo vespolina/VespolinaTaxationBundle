@@ -25,5 +25,5 @@ class VATTaxCategory extends TaxCategory
 
         return 'vat';
     }
- 
+
 }

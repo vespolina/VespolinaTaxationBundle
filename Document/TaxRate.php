@@ -8,6 +8,7 @@
 namespace Vespolina\TaxationBundle\Document;
 
 use Vespolina\TaxationBundle\Model\TaxRate as AbstractTaxRate;
+
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */

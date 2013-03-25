@@ -14,15 +14,11 @@ class TaxationManagerTest extends TaxationTestCommon
     {
         $taxationManager = $this->createTaxationManager();
 
-        $vatTaxCategory = $taxationManager->createTaxCategory('vat','vat');
-        //new \Vespolina\TaxationBundle\Model\TaxCategory\VATTaxCategory();
-
-
+        $vatTaxCategory = $taxationManager->createTaxCategory('vat', 'vat');
         $taxZoneBE = $taxationManager->createZone('be', 'Belgium');
 
         $taxRateBE6 = $taxationManager->createRateForZone('be21', 21, $vatTaxCategory, $taxZoneBE);
         $taxRateBE21 = $taxationManager->createRateForZone('be6', 6, $vatTaxCategory, $taxZoneBE);
-
 
         //Test retrieval of a registered zone
         $testTaZoneBe = $taxationManager->findZoneByCode('be');
@@ -37,7 +33,7 @@ class TaxationManagerTest extends TaxationTestCommon
     {
         $taxationManager = $this->createTaxationManager();
         $salesTaxCategory = new \Vespolina\TaxationBundle\Model\TaxCategory\SalesTaxCategory();
-        $salesTaxCategory = $taxationManager->createTaxCategory('sales','sales');
+        $salesTaxCategory = $taxationManager->createTaxCategory('sales', 'sales');
         $taxZoneUS = $taxationManager->createZone('us', 'United States');
         $taxZoneNY = $taxationManager->createZone('us-ny', 'New York');
         $taxZoneOR = $taxationManager->createZone('us-or', 'Oregon');
@@ -66,7 +62,7 @@ class TaxationManagerTest extends TaxationTestCommon
         $taxSchema = $taxationManager->loadTaxSchema('us');
 
         $this->assertGreaterThan(1, count($taxSchema['zones']));
-        foreach($taxSchema['zones'] as $zone) {
+        foreach ($taxSchema['zones'] as $zone) {
         }
 
     }
