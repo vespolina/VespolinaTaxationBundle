@@ -1,7 +1,7 @@
 {
     "name": "vespolina/taxation-bundle",
     "type": "symfony-bundle",
-    "description": "Vespolina Taxation bundle. Taxation management and more.",
+    "description": "Vespolina Taxation bundle. Tax, VAT and more.",
     "keywords": ["shop", "ecommerce", "taxation", "item"],
     "homepage": "http://vespolina-project.org",
     "license": "MIT",
@@ -14,8 +14,11 @@
     "require": {
         "php": ">=5.3.2",
         "symfony/symfony": "2.1.*",
-        "doctrine/mongodb-odm-bundle": "dev-master",
-        "vespolina/core": "dev-refactor"
+        "vespolina/core": "*"
+    },
+    "suggest": {
+        "symfony/doctrine-bundle": "*",
+        "symfony/mongodb-odm-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Vespolina\\TaxationBundle": "" }
