@@ -8,6 +8,7 @@
 namespace Vespolina\TaxationBundle\Entity;
 
 use Vespolina\TaxationBundle\Model\TaxCategory as AbstractTaxCategory;
+
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */

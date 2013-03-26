@@ -40,7 +40,7 @@ class TaxZone implements TaxZoneInterface
 
         $this->rates->set($rate->getCode(), $rate);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -65,7 +65,7 @@ class TaxZone implements TaxZoneInterface
     public function getRates(TaxCategoryInterface $category = null)
     {
 
-       return $this->rates;
+        return $this->rates;
     }
 
     /**

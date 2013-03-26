@@ -8,6 +8,7 @@
 namespace Vespolina\TaxationBundle\Document;
 
 use Vespolina\TaxationBundle\Model\TaxZone as AbstractTaxZone;
+
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
