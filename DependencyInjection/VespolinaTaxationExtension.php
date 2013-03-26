@@ -24,10 +24,10 @@ class VespolinaTaxationExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         if (!in_array(strtolower($config['db_driver']), array('mongodb', 'orm'))) {
-          throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
+            throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
         $loader->load(sprintf('%s.xml', $config['db_driver']));
 
@@ -35,6 +35,6 @@ class VespolinaTaxationExtension extends Extension
 
     public function getNamespace()
     {
-        return 'http://www.vespolina-org/schema/dic/vespolina-taxation-v1';
+        return 'http://www.vespolina-project.org/schema/dic/vespolina-taxation-v1';
     }
 }

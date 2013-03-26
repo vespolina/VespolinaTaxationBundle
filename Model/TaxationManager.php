@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use Vespolina\TaxationBundle\Model\TaxCategoryInterface;
-use Vespolina\TaxationBundle\Model\TaxRate;
-use Vespolina\TaxationBundle\Model\TaxRateInterface;
-use Vespolina\TaxationBundle\Model\TaxZone;
 use Vespolina\TaxationBundle\Model\TaxZoneInterface;
 use Vespolina\TaxationBundle\Model\TaxationManagerInterface;
 
@@ -25,20 +22,20 @@ use Vespolina\TaxationBundle\Model\TaxationManagerInterface;
  */
 abstract class TaxationManager extends ContainerAware implements TaxationManagerInterface
 {
-
     protected $taxCategoryClass;
     protected $taxRateClass;
     protected $taxZoneClass;
     protected $zones;
 
-    public function __construct($taxCategoryClass, $taxRateClass, $taxZoneClass) {
+    public function __construct($taxCategoryClass, $taxRateClass, $taxZoneClass)
+    {
 
         $this->taxCategoryClass = $taxCategoryClass;
         $this->taxRateClass = $taxRateClass;
         $this->taxZoneClass = $taxZoneClass;
         $this->zones = new ArrayCollection();
     }
-  
+
     /**
      * @inheritdoc
      */
@@ -52,7 +49,7 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
         $taxRate->setTaxZone($zone);
 
         $zone->addRate($taxRate);
-        
+
         return $taxRate;
     }
 
@@ -101,7 +98,8 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
     }
 
 
-    public function loadTaxSchema($country) {
+    public function loadTaxSchema($country)
+    {
 
         $taxSchema = array();
         $zones = array();
@@ -145,7 +143,7 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
                 continue;
             }
 
-            $location = ($state? $country . '-' . $state : $country);
+            $location = ($state ? $country . '-' . $state : $country);
 
             $selection = (string)$xmlZone->selection;
             $type = (string)$xmlZone->type;
@@ -167,7 +165,7 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
                 foreach ($xmlTaxRate->tax_rate->attributes() as $xmlName => $xmlValue) {
                     switch ((string)$xmlName) {
                         case 'default':
-                            if ((string)$xmlValue == 'true' ) {
+                            if ((string)$xmlValue == 'true') {
                                 $defaultTaxRate = $taxRate;
                             }
                             break;
@@ -182,7 +180,7 @@ abstract class TaxationManager extends ContainerAware implements TaxationManager
         }
 
         $taxSchema['zones'] = $zones;
-        $taxSchema['tax_enabled'] = count($zones) != 0 ? true: false;
+        $taxSchema['tax_enabled'] = count($zones) != 0 ? true : false;
 
         return $taxSchema;
     }

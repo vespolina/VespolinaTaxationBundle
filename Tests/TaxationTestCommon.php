@@ -8,10 +8,6 @@
 
 namespace Vespolina\TaxationBundle\Tests;
 
-
-use Vespolina\PartnerBundle\Model\Partner;
-use Vespolina\PartnerBundle\Model\PartnerManager;
-
 abstract class TaxationTestCommon extends \PHPUnit_Framework_TestCase
 {
 
