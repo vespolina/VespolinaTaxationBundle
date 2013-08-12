@@ -2,7 +2,7 @@
     "name": "vespolina/taxation-bundle",
     "type": "symfony-bundle",
     "description": "Vespolina Taxation bundle. Tax, VAT and more.",
-    "keywords": ["shop", "ecommerce", "tax"; "taxation", "item"],
+    "keywords": ["shop", "ecommerce", "tax", "taxation", "item"],
     "homepage": "http://vespolina-project.org",
     "license": "MIT",
     "authors": [
