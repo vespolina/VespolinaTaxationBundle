@@ -4,7 +4,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="Vespolina\TaxationBundle\Document\TaxCategory">
+    <document name="Vespolina\TaxationBundle\Document\TaxCategory" collection="v_tax_category">
         <field name="code"      fieldName="code"    type="string" id="true"/>
         <field name="name"      fieldName="name"    type="string" />
         <field name="rate"      fieldName="rate"    type="float" />
