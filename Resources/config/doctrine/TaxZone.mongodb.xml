@@ -4,7 +4,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="Vespolina\TaxationBundle\Document\TaxZone" collection="vespolina_tax_zones">
+    <document name="Vespolina\TaxationBundle\Document\TaxZone" collection="v_tax_zones">
         <field name="code"          fieldName="code"        type="string" id="true"/>
         <field name="country"       fieldName="country"     type="string"/>
         <field name="defaultRate"   fieldName="defaultRate" type="float" />
